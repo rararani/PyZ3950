@@ -57,7 +57,7 @@ t_RPAREN= r'\)'
 t_COMMA = r','
 t_SLASH = r'/'
 def t_ATTRSET(t):
-    r'(?i)ATTRSET'
+    r'(?i:(ATTRSET))'
     return t
 
 def t_SET (t): # need to def as function to override parsing as WORD, gr XXX
@@ -97,6 +97,7 @@ def t_QUAL(t):
 
 def mk_quals ():
     quals = ("|".join (['(' + x + ')' for x in list(qual_dict.keys())]))
+    print(quals)
     t_QUAL.__doc__ = "(?i)" + quals + r"|(\([0-9]+,[0-9]+\))"
 
 def t_QUOTEDVALUE(t):
@@ -111,7 +112,7 @@ word_non_init = r",|\.|\'"
 t_WORD = "(%s)(%s|%s)*" % (word_init, word_init, word_non_init)
 
 def t_LOGOP(t):
-    r'(?i)(AND)|(OR)|(NOT)'
+    r'(?i:((AND)|(OR)|(NOT)))'
     return t
 
 
@@ -352,13 +353,16 @@ def testyacc (s):
     print("RPN Query:", ast_to_rpn (ast))
 
 if __name__ == '__main__':
-    testfn = testyacc
-    #    testfn = testlex
-    testfn ('attrset (BIB1/ au="Gaiman, Neil" or ti=Sandman)')
-    while 1:
-        s = input ('Query: ')
-        if len (s) == 0:
-            break
-        testfn (s)
+    mk_quals()
+    # testfn = testyacc
+    # #    testfn = testlex
+    # testfn ('attrset (BIB1/ au="Gaiman, Neil" or ti=Sandman)')
+    # while 1:
+    #     s = input ('Query: ')
+    #     if len (s) == 0:
+    #         break
+    #     testfn (s)
+    
+    
 #    testyacc ()
 #    testlex ()
