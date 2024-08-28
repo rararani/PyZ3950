@@ -2,6 +2,8 @@
 from __future__ import print_function, absolute_import
 from PyZ3950 import zoom
 
+import pytest
+
 
 def test_library_of_congress_query():
     conn = zoom.Connection ('z3950.loc.gov', 7090)
