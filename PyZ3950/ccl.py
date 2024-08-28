@@ -97,8 +97,7 @@ def t_QUAL(t):
 
 def mk_quals ():
     quals = ("|".join (['(' + x + ')' for x in list(qual_dict.keys())]))
-    print(quals)
-    t_QUAL.__doc__ = "(?i)" + quals + r"|(\([0-9]+,[0-9]+\))"
+    t_QUAL.__doc__ = "(?i:" + quals + r"|(\([0-9]+,[0-9]+\))" + ")"
 
 def t_QUOTEDVALUE(t):
     r"(\".*?\")"
@@ -353,15 +352,14 @@ def testyacc (s):
     print("RPN Query:", ast_to_rpn (ast))
 
 if __name__ == '__main__':
-    mk_quals()
     # testfn = testyacc
-    # #    testfn = testlex
-    # testfn ('attrset (BIB1/ au="Gaiman, Neil" or ti=Sandman)')
-    # while 1:
-    #     s = input ('Query: ')
-    #     if len (s) == 0:
-    #         break
-    #     testfn (s)
+    testfn = testlex
+    testfn ('attrset (BIB1/ au="Gaiman, Neil" or ti=Sandman)')
+    while 1:
+        s = input ('Query: ')
+        if len (s) == 0:
+            break
+        testfn (s)
     
     
 #    testyacc ()
